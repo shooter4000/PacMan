@@ -21,6 +21,7 @@ public class PacmanModel {
 		at.translate(-500., -500.); 
 		atSimmetriaY.translate(1000, 0);
 		atSimmetriaY.scale(-1, 1);
+		//
 		
 		
 		creaMappa(); 
