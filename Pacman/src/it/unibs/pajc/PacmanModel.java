@@ -53,7 +53,6 @@ public class PacmanModel {
 		ORIZZONTALE,
 		VERTICALE;
 		
-		
 	}
 	
 	private void curva(Path2D path, double x1, double y1, double x2, double y2, DirezioneCurva direzione) {
