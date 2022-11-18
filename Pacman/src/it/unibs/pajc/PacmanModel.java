@@ -32,82 +32,110 @@ public class PacmanModel {
 		
 		/*
 		variazione smussamento angolo piccolo = 3 coordinate
-		variazione smussamento angolo piccolo = 10 coordinate
+		punto di controllo variazione piccola (guardare 3 e 4 parametri) = mappa.curveTo(184, 425, 186, 425, 187, 422);
+			curva da sx verso l'alto
+		
+		variazione smussamento angolo piccolo = 9 coordinate
+		punto di controllo variazione grande (guardare 3 e 4 parametri) = mappa.curveTo(186, 434, 195, 432, 197, 424);
+			curva da sx verso l'alto
 		*/
 		
 		int rientranzaBordi = 5;
 		
-		creaPorzioneMappaSuperiore(rientranzaBordi);
-		creaPorzioneMappaInferiore(rientranzaBordi);
+		creaPorzioneMappaSuperiore();
+		creaPorzioneMappaInferiore();
 		
 		mappa.append(mappa.createTransformedShape(atSimmetriaY), false);
 	}
 	
-	private void creaPorzioneMappaSuperiore(int rientranzaBordi) {
+	enum DirezioneCurva{
+		ORIZZONTALE,
+		VERTICALE;
+		
+		
+	}
+	
+	private void curva(Path2D path, double x1, double y1, double x2, double y2, DirezioneCurva direzione) {
+		switch(direzione) {
+		case ORIZZONTALE:
+			path.curveTo(x1, y1, x2, y1, x2, y2);
+			break;
+		case VERTICALE:
+			path.curveTo(x1, y1, x1, y2, x2, y2);
+			break;
+		}
+	}
+	
+	private void creaPorzioneMappaSuperiore() {
 		//meta margine in alto esterno
-		mappa.moveTo(rientranzaBordi, 425);
+		mappa.moveTo(5, 425);
 		mappa.lineTo(184, 425);
-		mappa.curveTo(184, 425, 187, 422, 187, 422);
-		//mappa.lineTo(187, 422);
+		curva(mappa, 184, 425, 187, 422, DirezioneCurva.ORIZZONTALE);
+		//mappa.curveTo(184, 425, 187, 425, 187, 422);
 		
 		mappa.lineTo(187, 324);
-		mappa.lineTo(184, 321);
+		curva(mappa, 187, 324, 184, 321, DirezioneCurva.VERTICALE);
+		//mappa.curveTo(187, 324, 187, 321, 184, 321);
+		//mappa.lineTo(184, 321);
+		
 		mappa.lineTo(15, 321);
-		mappa.lineTo(rientranzaBordi , 311);
-		mappa.lineTo(rientranzaBordi , 16);
-		mappa.lineTo(10+rientranzaBordi , 6);
+		mappa.lineTo(5 , 311);
+		mappa.lineTo(5 , 16);
+		mappa.lineTo(15 , 6);
 		mappa.lineTo(500, 6);
-				
+		
 		//meta margine in alto interno
-		mappa.moveTo(rientranzaBordi, 434);
-		mappa.lineTo(186, 434);
-		mappa.curveTo(186, 434, 195, 432, 197, 424);
-		//mappa.lineTo(197, 424);
-		mappa.lineTo(197, 322);
-		mappa.lineTo(187, 312);
-		mappa.lineTo(15+rientranzaBordi, 312);
-		mappa.lineTo(9+rientranzaBordi, 306);
-		mappa.lineTo(9+rientranzaBordi, 21);
+		mappa.moveTo(5, 434);
+		mappa.lineTo(187, 434);
+		curva(mappa, 187, 434, 196, 425, DirezioneCurva.ORIZZONTALE);
+		
+		mappa.lineTo(196, 322);
+		curva(mappa, 196, 322, 187, 312, DirezioneCurva.VERTICALE);
+		//mappa.lineTo(187, 312);
+		mappa.lineTo(20, 312);
+		mappa.lineTo(14, 306);
+		mappa.lineTo(14, 21);
 		mappa.lineTo(20, 16);
 		mappa.lineTo(472, 16);
 		mappa.lineTo(480, 25);
 		mappa.lineTo(480, 135);
 		mappa.lineTo(489, 146);
 		mappa.lineTo(500, 146);
+		
 	}
 	
-	private void creaPorzioneMappaInferiore(int rientranzaBordi) {
+	private void creaPorzioneMappaInferiore() {
 		//meta margine in basso esterno
-				mappa.moveTo(rientranzaBordi, 513);
-				mappa.lineTo(184, 513);
-				mappa.lineTo(187, 516);
-				mappa.lineTo(187, 614);
-				mappa.lineTo(184 , 617);
-				mappa.lineTo(10+rientranzaBordi , 617);
-				mappa.lineTo(rientranzaBordi, 627);
-				mappa.lineTo(rientranzaBordi, 984);
-				mappa.lineTo(10+rientranzaBordi, 994);
-				mappa.lineTo(500, 994);
-				
-				//meta margine in basso interno
-				mappa.moveTo(rientranzaBordi, 503);
-				mappa.lineTo(186, 503);
-				mappa.lineTo(197, 513);
-				mappa.lineTo(197, 617);
-				mappa.lineTo(186, 627);
-				mappa.lineTo(19, 627);
-				mappa.lineTo(16, 631);
-				mappa.lineTo(16, 784);
-				mappa.lineTo(24, 793);
-				mappa.lineTo(78, 793);
-				mappa.lineTo(88, 803);
-				mappa.lineTo(88, 811);
-				mappa.lineTo(78, 821);
-				mappa.lineTo(24, 821);
-				mappa.lineTo(16, 829);
-				mappa.lineTo(16, 980);
-				mappa.lineTo(21, 984);
-				mappa.lineTo(500, 984);
+			mappa.moveTo(5, 513);
+			mappa.lineTo(184, 513);
+			mappa.lineTo(187, 516);
+			mappa.lineTo(187, 614);
+			mappa.lineTo(184 , 617);
+			mappa.lineTo(15 , 617);
+			mappa.lineTo(5, 627);
+			mappa.lineTo(5, 984);
+			mappa.lineTo(15, 994);
+			mappa.lineTo(500, 994);
+			
+			//meta margine in basso interno
+			mappa.moveTo(5, 503);
+			mappa.lineTo(186, 503);
+			mappa.lineTo(197, 513);
+			mappa.lineTo(197, 617);
+			mappa.lineTo(186, 627);
+			mappa.lineTo(19, 627);
+			mappa.lineTo(16, 631);
+			mappa.lineTo(16, 784);
+			mappa.lineTo(24, 793);
+			mappa.lineTo(78, 793);
+			mappa.lineTo(88, 803);
+			mappa.lineTo(88, 811);
+			mappa.lineTo(78, 821);
+			mappa.lineTo(24, 821);
+			mappa.lineTo(16, 829);
+			mappa.lineTo(16, 980);
+			mappa.lineTo(21, 984);
+			mappa.lineTo(500, 984);
 	}
 	
 	public Shape getMappa() {
