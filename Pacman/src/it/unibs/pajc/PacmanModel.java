@@ -47,7 +47,9 @@ public class PacmanModel {
 		//meta margine in alto esterno
 		mappa.moveTo(rientranzaBordi, 425);
 		mappa.lineTo(184, 425);
-		mappa.lineTo(187, 422);
+		mappa.curveTo(184, 425, 187, 422, 187, 422);
+		//mappa.lineTo(187, 422);
+		
 		mappa.lineTo(187, 324);
 		mappa.lineTo(184, 321);
 		mappa.lineTo(15, 321);
@@ -59,7 +61,8 @@ public class PacmanModel {
 		//meta margine in alto interno
 		mappa.moveTo(rientranzaBordi, 434);
 		mappa.lineTo(186, 434);
-		mappa.lineTo(197, 424);
+		mappa.curveTo(186, 434, 195, 432, 197, 424);
+		//mappa.lineTo(197, 424);
 		mappa.lineTo(197, 322);
 		mappa.lineTo(187, 312);
 		mappa.lineTo(15+rientranzaBordi, 312);
