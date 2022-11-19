@@ -31,9 +31,10 @@ public class PnlAreaGioco extends JPanel {
 		g2.setColor(Color.black);
 		g2.fillRect(-500,-500, 1000,1000);
 		
-		g2.setColor(new Color(83,88,254));
+		g2.setColor(model.getMappa().getColoreBordi());
 		g2.draw(model.getMappa().getBordi());
 		for(Ostacolo o: model.getMappa().getElencoOstacoli()) {
+			g2.setColor(o.getColore());
 			g2.draw(o.getShape());
 		}
 		
