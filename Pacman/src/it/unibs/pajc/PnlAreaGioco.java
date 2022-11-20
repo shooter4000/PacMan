@@ -38,6 +38,10 @@ public class PnlAreaGioco extends JPanel {
 			g2.draw(o.getShape());
 		}
 		
+		for(Moneta o: model.getMappa().getMonete().values()) {
+			g2.setColor(o.getColore());
+			g2.fill(o.getForma());
+		}
 	}
 	
 }
