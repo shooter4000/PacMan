@@ -23,7 +23,7 @@ public class PnlAreaGioco extends JPanel {
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		double scaleFactor = Math.min(getWidth(), getHeight())/1000.;
 		
-		g2.scale(scaleFactor, -scaleFactor);
+				g2.scale(scaleFactor, -scaleFactor);
 		g2.translate(500.,-500.);
 		
 		g2.setStroke(new BasicStroke(5));
@@ -33,6 +33,8 @@ public class PnlAreaGioco extends JPanel {
 		
 		g2.setColor(model.getMappa().getColoreBordi());
 		g2.draw(model.getMappa().getBordi());
+		g2.setColor(Color.white);
+		g2.fillRect(500, -1000, 2000, 2000);
 		for(Ostacolo o: model.getMappa().getElencoOstacoli()) {
 			g2.setColor(o.getColore());
 			g2.draw(o.getShape());

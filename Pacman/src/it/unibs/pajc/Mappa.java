@@ -26,12 +26,18 @@ public class Mappa {
 	
 	private AffineTransform at;
 	private AffineTransform atSimmetriaY = new AffineTransform();
-	private Path2D bordi = new Path2D.Float();
+	private Path2D bordiEsterni = new Path2D.Float();
+	private Path2D bordiInterni = new Path2D.Float();
 	private List<Ostacolo> elencoOstacoli = new ArrayList<>();
 		
-	private Color coloreBordi = new Color(83, 88, 254); 
-	private Color coloreOstacoli = new Color(83, 88, 254);
-	private Color coloreCancello = new Color(240, 176, 233);
+	private final Color coloreBordi = new Color(83, 88, 254); 
+	private final Color coloreOstacoli = new Color(83, 88, 254);
+	private final Color coloreCancello = new Color(240, 176, 233);
+	
+	private final int larghezzaMonetePiccole = 8;
+	private final int altezzaMonetePiccole = 8;
+	private final int larghezzaMonetGrandi = 16;
+	private final int altezzaMoneteGrande = 16;
 	
 	public Mappa(AffineTransform at) {
 		this.at = at;
@@ -44,7 +50,9 @@ public class Mappa {
 	}
 	
 	public Shape getBordi() {
-		return bordi;
+		Path2D bordiTotali = (Path2D)bordiEsterni.clone();
+		bordiTotali.append(bordiInterni, false);
+		return bordiTotali;
 	}
 	
 	public List<Ostacolo> getElencoOstacoli() {
@@ -59,9 +67,10 @@ public class Mappa {
 		creaPorzioneMappaSuperiore();
 		creaPorzioneMappaInferiore();
 		
-		bordi.append(bordi.createTransformedShape(atSimmetriaY), false);
+		bordiEsterni.append(bordiEsterni.createTransformedShape(atSimmetriaY), false);
 		
-		bordi = (Path2D)at.createTransformedShape(bordi);
+		bordiEsterni = (Path2D)at.createTransformedShape(bordiEsterni);
+		bordiInterni = (Path2D)at.createTransformedShape(bordiInterni);
 	}
 	
 	private enum DirezioneCurva{
@@ -84,65 +93,111 @@ public class Mappa {
 	
 	private void creaPorzioneMappaSuperiore() {
 		//meta' margine in alto esterno
-		bordi.moveTo(5, 425);
-		bordi.lineTo(183, 425);
-		curva(bordi, 183, 425, 186, 422, DirezioneCurva.ORIZZONTALE);		
-		bordi.lineTo(186, 324);
-		curva(bordi, 186, 324, 183, 321, DirezioneCurva.VERTICALE);
-		bordi.lineTo(14, 321);
-		curva(bordi, 14, 321, 5, 312, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(5 , 16);
-		curva(bordi, 5, 16, 14, 7, DirezioneCurva.VERTICALE);
-		bordi.lineTo(500, 7);
+		
+		bordiEsterni.moveTo(0, 425);
+		bordiEsterni.lineTo(183, 425);
+		curva(bordiEsterni, 183, 425, 186, 422, DirezioneCurva.ORIZZONTALE);		
+		bordiEsterni.lineTo(186, 324);
+		curva(bordiEsterni, 186, 324, 183, 321, DirezioneCurva.VERTICALE);
+		bordiEsterni.lineTo(14, 321);
+		curva(bordiEsterni, 14, 321, 5, 312, DirezioneCurva.ORIZZONTALE);
+		bordiEsterni.lineTo(5 , 16);
+		curva(bordiEsterni, 5, 16, 14, 7, DirezioneCurva.VERTICALE);
+		bordiEsterni.lineTo(500, 7);
 		
 		//meta' margine in alto interno
-		bordi.moveTo(5, 434);
-		bordi.lineTo(186, 434);
-		curva(bordi, 186, 434, 195, 425, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(195, 321);
-		curva(bordi, 195, 321, 186, 312, DirezioneCurva.VERTICALE);
-		bordi.lineTo(17, 312);
-		curva(bordi, 17, 312, 14, 309, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(14, 21);
-		curva(bordi, 14, 21, 17, 16, DirezioneCurva.VERTICALE);
-		bordi.lineTo(472, 16);
-		curva(bordi, 472, 16, 481, 25, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(481, 136);
-		curva(bordi, 481, 136, 490, 145, DirezioneCurva.VERTICALE);
-		bordi.lineTo(500, 145);
+		bordiInterni.moveTo(5, 434);
+		bordiInterni.lineTo(186, 434);
+		curva(bordiInterni, 186, 434, 195, 425, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(195, 321);
+		curva(bordiInterni, 195, 321, 186, 312, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(17, 312);
+		curva(bordiInterni, 17, 312, 14, 309, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(14, 19);
+		curva(bordiInterni, 14, 19, 17, 16, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(472, 16);
+		curva(bordiInterni, 472, 16, 481, 25, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(481, 136);
+		curva(bordiInterni, 481, 136, 490, 145, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(500, 145);
+		
+		bordiInterni.lineTo(1000-490, 145);
+		curva(bordiInterni, 1000-490, 145, 1000-481, 136, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-481, 25);
+		curva(bordiInterni, 1000-481, 25, 1000-472, 16, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-17, 16);
+		curva(bordiInterni, 1000-17, 16, 1000-14, 19, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-14, 309);
+		curva(bordiInterni, 1000-14, 309, 1000-17, 312, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-186, 312);
+		curva(bordiInterni, 1000-186, 312, 1000-195, 321, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-195, 425);
+		curva(bordiInterni, 1000-195, 425, 1000-186, 434, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-5, 434);
+		
+		bordiInterni.lineTo(1000+10, 434);
+		bordiInterni.lineTo(1000+10, -10);
+		bordiInterni.lineTo(0-10, -10);
+		bordiInterni.lineTo(-10, 434);
+		bordiInterni.closePath();
 	}
 	private void creaPorzioneMappaInferiore() {
 		//meta' margine in basso esterno
-		bordi.moveTo(5, 513);
-		bordi.lineTo(183, 513);
-		curva(bordi, 183, 513, 186, 516, DirezioneCurva.ORIZZONTALE);	
-		bordi.lineTo(186, 615);
-		curva(bordi, 186, 615, 183, 618, DirezioneCurva.VERTICALE);
-		bordi.lineTo(14, 618);
-		curva(bordi, 14, 618, 5, 627, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(5, 986);
-		curva(bordi, 5, 986, 14, 995, DirezioneCurva.VERTICALE);
-		bordi.lineTo(500, 995);
+		bordiEsterni.moveTo(0, 513);
+		bordiEsterni.lineTo(183, 513);
+		curva(bordiEsterni, 183, 513, 186, 516, DirezioneCurva.ORIZZONTALE);	
+		bordiEsterni.lineTo(186, 615);
+		curva(bordiEsterni, 186, 615, 183, 618, DirezioneCurva.VERTICALE);
+		bordiEsterni.lineTo(14, 618);
+		curva(bordiEsterni, 14, 618, 5, 627, DirezioneCurva.ORIZZONTALE);
+		bordiEsterni.lineTo(5, 986);
+		curva(bordiEsterni, 5, 986, 14, 995, DirezioneCurva.VERTICALE);
+		bordiEsterni.lineTo(500, 995);
 			
 		//meta' margine in basso interno
-		bordi.moveTo(5, 504);
-		bordi.lineTo(186, 504);
-		curva(bordi, 186, 504, 195, 513, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(195, 618);
-		curva(bordi, 195, 618, 186, 627, DirezioneCurva.VERTICALE);
-		bordi.lineTo(17, 627);
-		curva(bordi, 17, 627, 14, 630, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(14, 784);
-		curva(bordi, 14, 784, 23, 793, DirezioneCurva.VERTICALE);
-		bordi.lineTo(78, 793);
-		curva(bordi, 78, 793, 87, 802, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(87, 811);
-		curva(bordi, 87, 811, 78, 820, DirezioneCurva.VERTICALE);
-		bordi.lineTo(23, 820);
-		curva(bordi, 23, 820, 14, 829, DirezioneCurva.ORIZZONTALE);
-		bordi.lineTo(14, 983);
-		curva(bordi, 14, 983, 19, 986, DirezioneCurva.VERTICALE);
-		bordi.lineTo(500, 986);
+		bordiInterni.moveTo(5, 504);
+		bordiInterni.lineTo(186, 504);
+		curva(bordiInterni, 186, 504, 195, 513, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(195, 618);
+		curva(bordiInterni, 195, 618, 186, 627, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(17, 627);
+		curva(bordiInterni, 17, 627, 14, 630, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(14, 784);
+		curva(bordiInterni, 14, 784, 23, 793, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(78, 793);
+		curva(bordiInterni, 78, 793, 87, 802, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(87, 811);
+		curva(bordiInterni, 87, 811, 78, 820, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(23, 820);
+		curva(bordiInterni, 23, 820, 14, 829, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(14, 983);
+		curva(bordiInterni, 14, 983, 17, 986, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(500, 986);
+		
+		bordiInterni.lineTo(1000-17, 986);
+		curva(bordiInterni, 1000-17, 986, 1000-14, 983, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-14, 829);
+		curva(bordiInterni, 1000-14, 829, 1000-23, 820, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-78, 820);
+		curva(bordiInterni, 1000-87, 820, 1000-87, 811, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-87, 802);
+		curva(bordiInterni, 1000-87, 802, 1000-78, 793, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-23, 793);
+		curva(bordiInterni, 1000-23, 793, 1000-14, 784, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-14, 630);
+		curva(bordiInterni, 1000-14, 630, 1000-17, 627, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-186, 627);
+		curva(bordiInterni, 1000-186, 627, 1000-195, 618, DirezioneCurva.ORIZZONTALE);
+		bordiInterni.lineTo(1000-195, 513);
+		curva(bordiInterni, 1000-195, 513, 1000-186, 504, DirezioneCurva.VERTICALE);
+		bordiInterni.lineTo(1000-5, 504);
+		
+		bordiInterni.lineTo(1000+10, 504);
+		bordiInterni.lineTo(1000+10, 1000+10);
+		bordiInterni.lineTo(-10, 1000+10);
+		bordiInterni.lineTo(-10, 504);
+		bordiInterni.closePath();
+		
 	}
 		
 	private void creaOstacoli() {
@@ -303,9 +358,10 @@ public class Mappa {
 	
 	private HashMap<Point2D, Moneta> monete = new HashMap<>();
 	private void creaMonete() {
-		for(int i = 51-4 ; i < 984-37; i+=((312-35-4)-(16+35-4))/7) { //colonna
-			for (int j = 49-4 ; j < 1000-40; j+=((481-35-4)-(14+35-4))/11) { //1 riga
-				Rectangle2D rettangolo = new Rectangle2D.Float(j, i, 8, 8);
+		int aumentoDimensionePerControllo = 10;
+		for(float i = 51; i <= 986-34; i+=((986-35)-(16+35))/28.) { //colonna
+			for (float j = 49; j < 1000-40; j+=((1000-14-35)-(14+35))/25.) { //1 riga
+				Rectangle2D rettangolo = new Rectangle2D.Float(j-(larghezzaMonetePiccole+aumentoDimensionePerControllo)/2, i-(altezzaMonetePiccole+aumentoDimensionePerControllo)/2, larghezzaMonetePiccole+aumentoDimensionePerControllo, altezzaMonetePiccole+aumentoDimensionePerControllo);
 				boolean isContenuto = false;
 				for(Ostacolo o : elencoOstacoli) {
 					if (o.getShape().intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
@@ -313,17 +369,18 @@ public class Mappa {
 						break;
 					}
 				}
-				if(!isContenuto) {
-					rettangolo.setRect(j, i, 8, 8);
-					Moneta moneta = new Moneta(10,at.createTransformedShape(rettangolo),Color.yellow);
-					monete.put(at.transform(new Point(j,i), null), moneta);	
+				if(bordiInterni.intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
+					isContenuto = true;
+				}		
+				if(!isContenuto && (i<=434 || i>=504 || (j>200 && j<1000-200))) {
+					rettangolo.setRect(j-larghezzaMonetePiccole/2, i-altezzaMonetePiccole/2, larghezzaMonetePiccole, altezzaMonetePiccole);
+					Moneta moneta = new Moneta(10,at.createTransformedShape(rettangolo),Color.yellow); 
+					monete.put(at.transform(new Point2D.Float(j,i), null), moneta);	
 				}
 				
 				/*CONTROLLO SUI BORDI
 				boolean contenuto = false;
-					if(bordi.intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
-						contenuto = true;
-					}				
+							
 				System.out.println(controllo.toString() + " " + contenuto);
 				*/
 				
