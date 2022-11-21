@@ -30,14 +30,16 @@ public class Mappa {
 	private Path2D bordiInterni = new Path2D.Float();
 	private List<Ostacolo> elencoOstacoli = new ArrayList<>();
 		
-	private final Color coloreBordi = new Color(83, 88, 254); 
-	private final Color coloreOstacoli = new Color(83, 88, 254);
-	private final Color coloreCancello = new Color(240, 176, 233);
+	private final Color COLORE_BORDI = new Color(83, 88, 254); 
+	private final Color COLORE_OSTACOLI = new Color(83, 88, 254);
+	private final Color COLORE_CANCELLO = new Color(240, 176, 233);
 	
-	private final int larghezzaMonetePiccole = 8;
-	private final int altezzaMonetePiccole = 8;
-	private final int larghezzaMonetGrandi = 16;
-	private final int altezzaMoneteGrande = 16;
+	private final int LARGHEZZA_MONETE_PICCOLE = 8;
+	private final int ALTEZZA_MONETE_PICCOLE = 8;
+	private final int LARGHEZZA_MONETE_GRANDI = 24;
+	private final int ALTEZZA_MONETE_GRANDI = 24;
+	private final double VALORE_MONETA_PICCOLA = 100;
+	private final double VALORE_MONETA_GRANDE = 10;
 	
 	public Mappa(AffineTransform at) {
 		this.at = at;
@@ -60,7 +62,7 @@ public class Mappa {
 	}
 	
 	public Color getColoreBordi() {
-		return coloreBordi;
+		return COLORE_BORDI;
 	}
 	
 	private void creaMappa() {
@@ -219,7 +221,7 @@ public class Mappa {
 	}
 	
 	private void creaOstacoloRettangolare(RoundRectangle2D forma) {
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), coloreOstacoli));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), COLORE_OSTACOLI));
 	}
 	
 	private void creaOstacoloCentrale(Point partenza) {
@@ -243,7 +245,7 @@ public class Mappa {
 		curva(ostacolo,partenza.x-9, partenza.y+9, partenza.x,partenza.y, DirezioneCurva.VERTICALE);
 		ostacolo.closePath();
 		
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(ostacolo), coloreOstacoli));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(ostacolo), COLORE_OSTACOLI));
 	}
 	
 	private void creaOstacoloLRovesciata() {
@@ -262,7 +264,7 @@ public class Mappa {
 		curva(forma, 93, 723, 84, 714, DirezioneCurva.ORIZZONTALE);
 		forma.closePath();
 		
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), coloreOstacoli));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), COLORE_OSTACOLI));
 	}
 		
 	private void creaOstacoloTRuotata() {
@@ -285,7 +287,7 @@ public class Mappa {
 		curva(forma, 274, 434, 265, 425, DirezioneCurva.ORIZZONTALE);
 		forma.closePath();
 		
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), coloreOstacoli));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), COLORE_OSTACOLI));
 	}
 	
 	private void creaOstacoloManganello() {
@@ -308,7 +310,7 @@ public class Mappa {
 		curva(forma, 93, 916, 84, 907, DirezioneCurva.ORIZZONTALE);
 		forma.closePath();
 		
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), coloreOstacoli));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(forma), COLORE_OSTACOLI));
 	}
 	
 	private void creaRettangoloCentrale() {
@@ -336,8 +338,8 @@ public class Mappa {
 		cancello.moveTo(500-32-3, 408);
 		cancello.lineTo(500+32+3, 408);
 		
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(cancello), coloreCancello));
-		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(rettangoloEsterno), coloreOstacoli));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(cancello), COLORE_CANCELLO));
+		elencoOstacoli.add(new Ostacolo(at.createTransformedShape(rettangoloEsterno), COLORE_OSTACOLI));
 	}
 	
 	private void creaOstacoliSimmetrici() {
@@ -351,17 +353,19 @@ public class Mappa {
 		for(int i = 0; i<numeroOstacoliIniziale;i++) {
 			Shape forma = atInversa.createTransformedShape(elencoOstacoli.get(i).getShape());
 			Shape formaSimmetrica = atSimmetriaY.createTransformedShape(forma);
-			elencoOstacoli.add(new Ostacolo(at.createTransformedShape(formaSimmetrica), coloreOstacoli));
+			elencoOstacoli.add(new Ostacolo(at.createTransformedShape(formaSimmetrica), COLORE_OSTACOLI));
 			
 		}
 	}
 	
 	private HashMap<Point2D, Moneta> monete = new HashMap<>();
 	private void creaMonete() {
-		int aumentoDimensionePerControllo = 10;
-		for(float i = 51; i <= 986-34; i+=((986-35)-(16+35))/28.) { //colonna
-			for (float j = 49; j < 1000-40; j+=((1000-14-35)-(14+35))/25.) { //1 riga
-				Rectangle2D rettangolo = new Rectangle2D.Float(j-(larghezzaMonetePiccole+aumentoDimensionePerControllo)/2, i-(altezzaMonetePiccole+aumentoDimensionePerControllo)/2, larghezzaMonetePiccole+aumentoDimensionePerControllo, altezzaMonetePiccole+aumentoDimensionePerControllo);
+		float dimensionePerControllo = 18;
+		int numRiga = 1;
+		for(float i = 51; i <= 986-34; i+=((986-35)-(16+35))/28.) {
+			int numColonna = 1;
+			for (float j = 49; j < 1000-40; j+=((1000-14-35)-(14+35))/25.) {
+				RoundRectangle2D rettangolo = new RoundRectangle2D.Float(j-dimensionePerControllo/2, i-dimensionePerControllo/2, dimensionePerControllo, dimensionePerControllo, 18, 18);
 				boolean isContenuto = false;
 				for(Ostacolo o : elencoOstacoli) {
 					if (o.getShape().intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
@@ -371,20 +375,23 @@ public class Mappa {
 				}
 				if(bordiInterni.intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
 					isContenuto = true;
-				}		
-				if(!isContenuto && (i<=434 || i>=504 || (j>200 && j<1000-200))) {
-					rettangolo.setRect(j-larghezzaMonetePiccole/2, i-altezzaMonetePiccole/2, larghezzaMonetePiccole, altezzaMonetePiccole);
-					Moneta moneta = new Moneta(10,at.createTransformedShape(rettangolo),Color.yellow); 
-					monete.put(at.transform(new Point2D.Float(j,i), null), moneta);	
 				}
 				
-				/*CONTROLLO SUI BORDI
-				boolean contenuto = false;
-							
-				System.out.println(controllo.toString() + " " + contenuto);
-				*/
-				
+				if(!isContenuto && (i<=434 || i>=504 || (j>200 && j<1000-200))) {
+					double punti;
+					if((numRiga == 3 || numRiga==22) && (numColonna==1 || numColonna==26)) {
+						rettangolo.setRoundRect(j-LARGHEZZA_MONETE_GRANDI/2, i-ALTEZZA_MONETE_GRANDI/2, LARGHEZZA_MONETE_GRANDI, ALTEZZA_MONETE_GRANDI, 18, 18);
+						punti = VALORE_MONETA_GRANDE;
+					}else {
+						rettangolo.setRoundRect(j-LARGHEZZA_MONETE_PICCOLE/2, i-ALTEZZA_MONETE_PICCOLE/2, LARGHEZZA_MONETE_PICCOLE, ALTEZZA_MONETE_PICCOLE, 18, 18);
+						punti = VALORE_MONETA_PICCOLA;
+					}
+					Moneta moneta = new Moneta(punti, at.createTransformedShape(rettangolo),Color.yellow); 
+					monete.put(at.transform(new Point2D.Float(j,i), null), moneta);
+				}
+				numColonna++;
 			}
+			numRiga++;
 		}
 		
 	}

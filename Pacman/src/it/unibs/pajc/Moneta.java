@@ -5,17 +5,17 @@ import java.awt.Shape;
 
 public class Moneta {
 
-    private int valore; 
+    private double valore; 
     private Shape forma;
     private Color colore; 
 
-    public Moneta(int valore, Shape forma, Color colore) {
+    public Moneta(double valore, Shape forma, Color colore) {
         this.valore = valore;
         this.forma = forma;
         this.colore = colore;
     }
 
-    public int getValore() {
+    public double getValore() {
         return valore;
     }
     public Color getColore() {
