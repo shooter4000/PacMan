@@ -5,15 +5,26 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
-public class PnlAreaGioco extends JPanel {
+public class PnlAreaGioco extends JPanel implements KeyListener{
 	
 	PacmanModel model = new PacmanModel();
 	
 	public PnlAreaGioco() {
-
+		Timer t = new Timer(10, e -> {
+			model.stepNext();
+			repaint();
+		});
+		t.start();
+		
+		this.setFocusable(true);
+		this.requestFocusInWindow();
+		this.addKeyListener(this);
 	}
 
 	@Override
@@ -44,6 +55,35 @@ public class PnlAreaGioco extends JPanel {
 			g2.setColor(o.getColore());
 			g2.fill(o.getForma());
 		}
+		
+		for(Personaggio p: model.getElencoPersonaggi()) {
+			g2.fill(p.getForma());
+		}
+		
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		Pacman p = model.getPacman();
+		switch(e.getKeyCode()) {
+		case KeyEvent.VK_LEFT: p.cambiaDirezione(Direzioni.SINISTRA); break;
+		case KeyEvent.VK_RIGHT: p.cambiaDirezione(Direzioni.DESTRA); break;
+		case KeyEvent.VK_UP: p.cambiaDirezione(Direzioni.SOPRA); break;
+		case KeyEvent.VK_DOWN: p.cambiaDirezione(Direzioni.SOTTO); break;
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
