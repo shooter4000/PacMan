@@ -57,9 +57,11 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		}
 		
 		for(Personaggio p: model.getElencoPersonaggi()) {
-			g2.fill(p.getForma());
+			p.getFormaGrafica().forEach(x -> {
+				g2.setColor(x.getColore());
+				g2.fill(x.getForma());
+			});
 		}
-		
 		
 	}
 

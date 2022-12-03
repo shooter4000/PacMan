@@ -3,25 +3,41 @@ package it.unibs.pajc;
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public abstract class Personaggio {
-	private Shape forma;
-	private Color colore;
+	private Shape formaComputazionale;
+	private ArrayList<Forma> formaGrafica = new ArrayList<>();
 	private Point2D posCentro;
 	private Direzioni direzione;
 	private static double VELOCITA = 2;
-	public Personaggio(Color colore, Point2D posCentro, Direzioni direzione) {
-		this.colore = colore;
+	protected final static int SIZE_FORMA_COMPUTAZIONALE = 70;
+	protected final static int SIZE_FORMA_GRAFICA = 60;
+	
+	public Personaggio(Point2D posCentro, Direzioni direzione) {
 		this.posCentro = posCentro;
 		this.direzione = direzione;
 	}
-	public Shape getForma() {
-		return forma;
+	
+	public Shape getFormaComputazionale() {
+		return formaComputazionale;
 	}
 	
-	public void setForma(Shape forma) {
-		this.forma = forma;
+	public void setFormaComputazionale(Shape forma) {
+		this.formaComputazionale = forma;
 	}	
+	
+	public ArrayList<Forma> getFormaGrafica() {
+		return formaGrafica;
+	}
+	
+	protected void resettaFormaGrafica() {
+		formaGrafica.clear();
+	}
+	
+	public void addFormaGrafica(Forma forma) {
+		this.formaGrafica.add(forma);
+	}
 	
 	public Point2D getPosCentro() {
 		return posCentro;

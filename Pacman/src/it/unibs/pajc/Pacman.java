@@ -14,25 +14,36 @@ public class Pacman extends Personaggio{
 	private double angolo=0;
 	private static double DELTA_ANGOLO = 3;
 	private boolean isClosing = true;
+	private Color colorePacman;
 	
 	public Pacman(Color colore) {
-		super(colore, new Point2D.Float(0, 0), Direzioni.DESTRA);
-		setForma(costruisciPacman());
+		super(new Point2D.Float(0, 0), Direzioni.DESTRA);
+		colorePacman = colore;
+		costruisciPacman();
 		
 	}
 	
-	//70
-	private Arc2D costruisciPacman() {
-		Arc2D cerchio = new Arc2D.Float();
+	private double stabilisciAngoloInizialePacman() {
 		Direzioni direzione = getDirezione();
 		double angoloRotazioneApertura = getDirezione().getAngolo();
 		if(direzione == Direzioni.SOPRA || direzione == Direzioni.SOTTO) {
 			angoloRotazioneApertura = getDirezione().getAngolo() + 180;
 		}else {
 			angoloRotazioneApertura = getDirezione().getAngolo(); 
-		}		
-		cerchio.setArcByCenter(getPosCentro().getX(), getPosCentro().getY(), 35,ANGOLO_APERTURA_MAX-angolo + angoloRotazioneApertura,
-				360-(ANGOLO_APERTURA_MAX - angolo)*2, Arc2D.PIE);
+		}
+		return ANGOLO_APERTURA_MAX-angolo + angoloRotazioneApertura;
+	}
+	
+	private void costruisciPacman() {
+		setFormaComputazionale(costruisciPacman(SIZE_FORMA_COMPUTAZIONALE));
+		resettaFormaGrafica();
+		addFormaGrafica(new Forma(costruisciPacman(SIZE_FORMA_GRAFICA), colorePacman));
+	}
+	private Arc2D costruisciPacman(int diametro) {
+		Arc2D cerchio = new Arc2D.Float();
+		
+		cerchio.setArcByCenter(getPosCentro().getX(), getPosCentro().getY(), diametro/2,
+				stabilisciAngoloInizialePacman(), 360-(ANGOLO_APERTURA_MAX - angolo)*2, Arc2D.PIE);
 		return cerchio;
 	}
 
@@ -46,7 +57,7 @@ public class Pacman extends Personaggio{
 		Point2D posCentro = getPosCentro();
 		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
 		setPosCentro(posCentro);
-		setForma(costruisciPacman());
+		costruisciPacman();
 		
 	}
 
@@ -59,12 +70,10 @@ public class Pacman extends Personaggio{
 		else {
 			this.angolo -=DELTA_ANGOLO;
 			if(Math.abs(0 - angolo)<=0.001 )
-				isClosing=true;
-	
-			
+				isClosing=true;			
 		}
 		
-		setForma(costruisciPacman());
+		costruisciPacman();
 	}
 
 	public void cambiaDirezione(Direzioni direzione) {

@@ -2,6 +2,7 @@ package it.unibs.pajc;
 
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 public class PacmanModel {
@@ -35,7 +36,12 @@ public class PacmanModel {
 	private void creaPersonaggi() {
 		pacman = new Pacman(Color.yellow);
 		elencoPersonaggi.add(pacman);
+		elencoPersonaggi.add(new Fantasma(Color.red, new Point2D.Float(100, -20), Direzioni.SOPRA));
+		elencoPersonaggi.add(new Fantasma(Color.orange, new Point2D.Float(30, -20), Direzioni.DESTRA));
+		elencoPersonaggi.add(new Fantasma(Color.pink, new Point2D.Float(-40, -20), Direzioni.SOTTO));
+		elencoPersonaggi.add(new Fantasma(Color.cyan, new Point2D.Float(-110, -20), Direzioni.SINISTRA));
 	}
+	
 	
 	public void stepNext() {
 		for(Personaggio p: elencoPersonaggi) {
