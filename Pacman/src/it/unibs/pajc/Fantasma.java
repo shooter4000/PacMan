@@ -102,7 +102,21 @@ public class Fantasma extends Personaggio{
 	@Override
 	public void stepNext() {
 		// TODO Auto-generated method stub
+		muoviFantasma();
 		
 	}
-
+	private void muoviFantasma() {
+		Direzioni direzione = getDirezione();
+		Point2D posCentro = getPosCentro();
+		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
+		setPosCentro(posCentro);
+		costruisciFantasma();
+	}
+	
+	@Override
+	public Shape simulaProssimaPosizione() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

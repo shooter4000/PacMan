@@ -5,6 +5,7 @@ import java.awt.Shape;
 import java.awt.geom.Arc2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.Timer;
 
@@ -15,9 +16,10 @@ public class Pacman extends Personaggio{
 	private static double DELTA_ANGOLO = 3;
 	private boolean isClosing = true;
 	private Color colorePacman;
+	private Direzioni direzioneProssima;
 	
 	public Pacman(Color colore) {
-		super(new Point2D.Float(0, 0), Direzioni.DESTRA);
+		super(new Point2D.Float(-495+35+9, 250), Direzioni.SINISTRA);
 		colorePacman = colore;
 		costruisciPacman();
 		
@@ -35,30 +37,34 @@ public class Pacman extends Personaggio{
 	}
 	
 	private void costruisciPacman() {
-		setFormaComputazionale(costruisciPacman(SIZE_FORMA_COMPUTAZIONALE));
+		setFormaComputazionale(costruisciPacman(SIZE_FORMA_COMPUTAZIONALE, getPosCentro()));
 		resettaFormaGrafica();
-		addFormaGrafica(new Forma(costruisciPacman(SIZE_FORMA_GRAFICA), colorePacman));
+		addFormaGrafica(new Forma(costruisciPacman(SIZE_FORMA_GRAFICA, getPosCentro()), colorePacman));
 	}
-	private Arc2D costruisciPacman(int diametro) {
+	private Arc2D costruisciPacman(int diametro, Point2D posCentro) {
 		Arc2D cerchio = new Arc2D.Float();
 		
-		cerchio.setArcByCenter(getPosCentro().getX(), getPosCentro().getY(), diametro/2,
+		cerchio.setArcByCenter(posCentro.getX(), posCentro.getY(), diametro/2,
 				stabilisciAngoloInizialePacman(), 360-(ANGOLO_APERTURA_MAX - angolo)*2, Arc2D.PIE);
 		return cerchio;
 	}
 
 	public void stepNext() {
-		cambiaAngolo();
 		muoviPacman();
+		cambiaAngolo();
 	}
 	
-	private void muoviPacman() {
+	public Point2D getMaxPosizione() {
+		Point2D margine = new Point2D.Double(getPosCentro().getX()+(SIZE_FORMA_COMPUTAZIONALE/2), getPosCentro().getY()+(SIZE_FORMA_COMPUTAZIONALE/2));
+		return margine;
+	}
+	
+	public void muoviPacman() {
 		Direzioni direzione = getDirezione();
 		Point2D posCentro = getPosCentro();
 		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
 		setPosCentro(posCentro);
 		costruisciPacman();
-		
 	}
 
 	private void cambiaAngolo() {
@@ -75,10 +81,15 @@ public class Pacman extends Personaggio{
 		
 		costruisciPacman();
 	}
-
-	public void cambiaDirezione(Direzioni direzione) {
-		setDirezione(direzione);
 		
+	@Override
+	public Shape simulaProssimaPosizione() {
+		Direzioni direzione = getDirezione();
+		Point2D posCentro = (Point2D)getPosCentro().clone();
+		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
+		return new Rectangle2D.Float((float)(posCentro.getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
+				(float)(posCentro.getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE);
+		//return costruisciPacman(SIZE_FORMA_COMPUTAZIONALE, posCentro);
 	}
 
 }

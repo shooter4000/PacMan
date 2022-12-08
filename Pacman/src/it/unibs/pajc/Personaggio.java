@@ -10,8 +10,8 @@ public abstract class Personaggio {
 	private ArrayList<Forma> formaGrafica = new ArrayList<>();
 	private Point2D posCentro;
 	private Direzioni direzione;
-	private static double VELOCITA = 2;
-	protected final static int SIZE_FORMA_COMPUTAZIONALE = 70;
+	private double velocita = 2;
+	protected final static int SIZE_FORMA_COMPUTAZIONALE = 68;
 	protected final static int SIZE_FORMA_GRAFICA = 60;
 	
 	public Personaggio(Point2D posCentro, Direzioni direzione) {
@@ -48,7 +48,10 @@ public abstract class Personaggio {
 	}
 	
 	public double getVelocita() {
-		return VELOCITA;
+		return velocita;
+	}
+	public void setVelocita(double velocita) {
+		this.velocita = velocita;
 	}
 	
 	public Direzioni getDirezione() {
@@ -61,4 +64,5 @@ public abstract class Personaggio {
 	
 	public abstract void stepNext();
 	
+	public abstract Shape simulaProssimaPosizione();
 }

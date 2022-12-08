@@ -399,4 +399,12 @@ public class Mappa {
 		return monete;
 	}
 	
+	public boolean interseca(Shape forma) {
+		return bordiInterni.intersects(forma.getBounds2D()) || 
+				elencoOstacoli
+					.stream()
+					.filter(ostacolo -> ostacolo.getShape().intersects(forma.getBounds2D()))
+					.count()!=0;
+	}
+	
 }
