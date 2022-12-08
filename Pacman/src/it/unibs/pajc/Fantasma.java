@@ -113,10 +113,4 @@ public class Fantasma extends Personaggio{
 		costruisciFantasma();
 	}
 	
-	@Override
-	public Shape simulaProssimaPosizione() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

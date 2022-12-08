@@ -74,10 +74,10 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 	public void keyPressed(KeyEvent e) {
 		Pacman p = model.getPacman();
 		switch(e.getKeyCode()) {
-		case KeyEvent.VK_LEFT:p.setDirezione(Direzioni.SINISTRA); break;
-		case KeyEvent.VK_RIGHT: p.setDirezione(Direzioni.DESTRA); break;
-		case KeyEvent.VK_UP: p.setDirezione(Direzioni.SOPRA); break;
-		case KeyEvent.VK_DOWN: p.setDirezione(Direzioni.SOTTO); break;
+		case KeyEvent.VK_LEFT:p.setDirezioneProssima(Direzioni.SINISTRA); break;
+		case KeyEvent.VK_RIGHT: p.setDirezioneProssima(Direzioni.DESTRA); break;
+		case KeyEvent.VK_UP: p.setDirezioneProssima(Direzioni.SOPRA); break;
+		case KeyEvent.VK_DOWN: p.setDirezioneProssima(Direzioni.SOTTO); break;
 		}
 		
 	}

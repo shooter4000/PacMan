@@ -3,6 +3,7 @@ package it.unibs.pajc;
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
 public abstract class Personaggio {
@@ -10,6 +11,7 @@ public abstract class Personaggio {
 	private ArrayList<Forma> formaGrafica = new ArrayList<>();
 	private Point2D posCentro;
 	private Direzioni direzione;
+	private Direzioni direzioneProssima;
 	private double velocita = 2;
 	protected final static int SIZE_FORMA_COMPUTAZIONALE = 68;
 	protected final static int SIZE_FORMA_GRAFICA = 60;
@@ -62,7 +64,21 @@ public abstract class Personaggio {
 		this.direzione = direzione;
 	}
 	
+	public Direzioni getDirezioneProssima() {
+		return direzioneProssima;
+	}
+	
+	public void setDirezioneProssima(Direzioni direzione) {
+		direzioneProssima = direzione;
+	
+	}
+	
 	public abstract void stepNext();
 	
-	public abstract Shape simulaProssimaPosizione();
+	public Shape simulaProssimaPosizione(Direzioni direzione) {
+		Point2D posCentro = (Point2D)getPosCentro().clone();
+		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
+		return new Rectangle2D.Float((float)(posCentro.getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
+				(float)(posCentro.getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE);
+	}
 }

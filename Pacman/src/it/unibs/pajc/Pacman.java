@@ -16,7 +16,7 @@ public class Pacman extends Personaggio{
 	private static double DELTA_ANGOLO = 3;
 	private boolean isClosing = true;
 	private Color colorePacman;
-	private Direzioni direzioneProssima;
+	
 	
 	public Pacman(Color colore) {
 		super(new Point2D.Float(-495+35+9, 250), Direzioni.SINISTRA);
@@ -81,15 +81,4 @@ public class Pacman extends Personaggio{
 		
 		costruisciPacman();
 	}
-		
-	@Override
-	public Shape simulaProssimaPosizione() {
-		Direzioni direzione = getDirezione();
-		Point2D posCentro = (Point2D)getPosCentro().clone();
-		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
-		return new Rectangle2D.Float((float)(posCentro.getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
-				(float)(posCentro.getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE);
-		//return costruisciPacman(SIZE_FORMA_COMPUTAZIONALE, posCentro);
-	}
-
 }
