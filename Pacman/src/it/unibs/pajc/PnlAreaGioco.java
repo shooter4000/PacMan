@@ -41,26 +41,30 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		
 		g2.setColor(Color.black);
 		g2.fillRect(-500,-500, 1000,1000);
-		
-		g2.setColor(model.getMappa().getColoreBordi());
-		g2.draw(model.getMappa().getBordi());
-		g2.setColor(Color.white);
-		g2.fillRect(500, -1000, 2000, 2000);
-		for(Ostacolo o: model.getMappa().getElencoOstacoli()) {
-			g2.setColor(o.getColore());
-			g2.draw(o.getShape());
+				
+		for(Forma f: model.getMappa().getElencoOstacoliGrafici()) {
+			g2.setColor(f.getColore());
+			g2.draw(f.getForma());
 		}
 		
+		g2.setColor(Color.white);
+		g2.fillRect(500, -1000, 2000, 2000);
 		for(Moneta o: model.getMappa().getMonete().values()) {
 			g2.setColor(o.getColore());
 			g2.fill(o.getForma());
 		}
 		
 		for(Personaggio p: model.getElencoPersonaggi()) {
+			/*
+			g2.setColor(p.getFormaComputazionale().getColore());
+			g2.fill(p.getFormaComputazionale().getForma());
+			*/
+			
 			p.getFormaGrafica().forEach(x -> {
 				g2.setColor(x.getColore());
 				g2.fill(x.getForma());
 			});
+			
 		}
 		
 	}

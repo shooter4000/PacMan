@@ -6,6 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public class Fantasma extends Personaggio{
 
@@ -27,7 +28,8 @@ public class Fantasma extends Personaggio{
 
 	
 	private void costruisciFantasma() {
-		setFormaComputazionale(costruisciCorpoFantasma(SIZE_FORMA_COMPUTAZIONALE));
+		setFormaComputazionale(new Forma(new Rectangle2D.Float((float)(getPosCentro().getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
+				(float)(getPosCentro().getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE), coloreFantasma));
 		resettaFormaGrafica();
 		addFormaGrafica(new Forma(costruisciCorpoFantasma(SIZE_FORMA_GRAFICA), coloreFantasma));
 		addFormaGrafica(new Forma(costruisciPupilleFantasma(SIZE_FORMA_GRAFICA), COLORE_PUPILLA_OCCHI));

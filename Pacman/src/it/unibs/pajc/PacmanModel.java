@@ -46,12 +46,13 @@ public class PacmanModel {
 	
 	public void stepNext() {
 		for(Personaggio p: elencoPersonaggi) {
-			
-			if(p.getDirezioneProssima()!=null && !mappa.interseca(p.simulaProssimaPosizione(p.getDirezioneProssima())))
+			if(p.getDirezioneProssima()!=null && !mappa.interseca(p.simulaProssimaPosizione(p.getDirezioneProssima()))) {
 				p.setDirezione(p.getDirezioneProssima());
+			}
 			
 			if(!mappa.interseca(p.simulaProssimaPosizione(p.getDirezione())))
 				p.stepNext();
+
 		}
 	}
 	

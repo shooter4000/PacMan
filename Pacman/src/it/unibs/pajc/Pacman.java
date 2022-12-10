@@ -37,7 +37,8 @@ public class Pacman extends Personaggio{
 	}
 	
 	private void costruisciPacman() {
-		setFormaComputazionale(costruisciPacman(SIZE_FORMA_COMPUTAZIONALE, getPosCentro()));
+		setFormaComputazionale(new Forma(new Rectangle2D.Float((float)(getPosCentro().getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
+				(float)(getPosCentro().getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE), colorePacman));
 		resettaFormaGrafica();
 		addFormaGrafica(new Forma(costruisciPacman(SIZE_FORMA_GRAFICA, getPosCentro()), colorePacman));
 	}
@@ -53,12 +54,7 @@ public class Pacman extends Personaggio{
 		muoviPacman();
 		cambiaAngolo();
 	}
-	
-	public Point2D getMaxPosizione() {
-		Point2D margine = new Point2D.Double(getPosCentro().getX()+(SIZE_FORMA_COMPUTAZIONALE/2), getPosCentro().getY()+(SIZE_FORMA_COMPUTAZIONALE/2));
-		return margine;
-	}
-	
+
 	public void muoviPacman() {
 		Direzioni direzione = getDirezione();
 		Point2D posCentro = getPosCentro();
