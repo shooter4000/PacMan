@@ -42,7 +42,7 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		g2.setColor(Color.black);
 		g2.fillRect(-500,-500, 1000,1000);
 				
-		for(Forma f: model.getMappa().getElencoOstacoliGrafici()) {
+		for(Forma f: model.getMappa().getElencoOstacoliComputazionali()) {
 			g2.setColor(f.getColore());
 			g2.draw(f.getForma());
 		}
@@ -55,16 +55,16 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		}
 		
 		for(Personaggio p: model.getElencoPersonaggi()) {
-			/*
+			
 			g2.setColor(p.getFormaComputazionale().getColore());
 			g2.fill(p.getFormaComputazionale().getForma());
-			*/
 			
+			/*
 			p.getFormaGrafica().forEach(x -> {
 				g2.setColor(x.getColore());
 				g2.fill(x.getForma());
 			});
-			
+			*/
 		}
 		
 	}

@@ -12,10 +12,9 @@ public abstract class Personaggio {
 	private Point2D posCentro;
 	private Direzioni direzione;
 	private Direzioni direzioneProssima;
-	private double velocita = VELOCITA_INIZIALE;
+	private int velocita = 3;
 	protected final static int SIZE_FORMA_COMPUTAZIONALE = 70;
 	protected final static int SIZE_FORMA_GRAFICA = 60;
-	public final static double VELOCITA_INIZIALE = 1;
 	
 	public Personaggio(Point2D posCentro, Direzioni direzione) {
 		this.posCentro = posCentro;
@@ -53,7 +52,7 @@ public abstract class Personaggio {
 	public double getVelocita() {
 		return velocita;
 	}
-	public void setVelocita(double velocita) {
+	public void setVelocita(int velocita) {
 		this.velocita = velocita;
 	}
 	
@@ -78,7 +77,7 @@ public abstract class Personaggio {
 	
 	public Shape simulaProssimaPosizione(Direzioni direzione) {
 		Point2D posCentro = (Point2D)getPosCentro().clone();
-		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
+		posCentro.setLocation(posCentro.getX() + /*getVelocita() * */ direzione.getVersoreX(), posCentro.getY() + /*getVelocita() **/ direzione.getVersoreY());
 		return new Rectangle2D.Float((float)(posCentro.getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
 				(float)(posCentro.getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE);
 	}

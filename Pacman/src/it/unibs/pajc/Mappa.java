@@ -327,7 +327,7 @@ public class Mappa {
 		forma.lineTo(411, 329);
 		curva(forma, 411, 329, 402, 338, DirezioneCurva.VERTICALE, bevelAngoli);
 		forma.lineTo(315, 338);
-		curva(forma, 313, 338, 304, 347, DirezioneCurva.ORIZZONTALE, bevelAngoli);
+		curva(forma, 315, 338, 304, 347, DirezioneCurva.ORIZZONTALE, bevelAngoli);
 		forma.lineTo(304, 425);
 		curva(forma, 304, 425, 295, 434, DirezioneCurva.VERTICALE, bevelAngoli);
 		forma.lineTo(274, 434);

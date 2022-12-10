@@ -13,7 +13,7 @@ import javax.swing.Timer;
 public class Pacman extends Personaggio{
 	private static final double ANGOLO_APERTURA_MAX = 45;
 	private double angolo=0;
-	private static double DELTA_ANGOLO = 3;
+	private static double DELTA_ANGOLO = 0.75;
 	private boolean isClosing = true;
 	private Color colorePacman;
 	
@@ -58,14 +58,14 @@ public class Pacman extends Personaggio{
 	public void muoviPacman() {
 		Direzioni direzione = getDirezione();
 		Point2D posCentro = getPosCentro();
-		posCentro.setLocation(posCentro.getX() + getVelocita() * direzione.getVersoreX(), posCentro.getY() + getVelocita() * direzione.getVersoreY());
+		posCentro.setLocation(posCentro.getX() + /*getVelocita() * */direzione.getVersoreX(), posCentro.getY() + /*getVelocita() * */direzione.getVersoreY());
 		setPosCentro(posCentro);
 		costruisciPacman();
 	}
 
 	private void cambiaAngolo() {
 		if(isClosing) {
-			this.angolo += DELTA_ANGOLO;
+			this.angolo += DELTA_ANGOLO*getVelocita();
 			if(Math.abs(ANGOLO_APERTURA_MAX - angolo)<=0.001 )
 				isClosing=false;
 		}
