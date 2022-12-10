@@ -30,7 +30,7 @@ public class Mappa {
 	private ArrayList<Forma> elencoOstacoliComputazionali = new ArrayList<>();
 	private ArrayList<Forma> elencoOstacoliGrafici = new ArrayList<>();
 	
-	private HashMap<Point2D, Moneta> monete = new HashMap<>();
+	private ArrayList<Moneta> monete = new ArrayList<>();
 	
 	//private Path2D bordiEsterni = new Path2D.Float();
 	//private Path2D bordiInterni = new Path2D.Float();
@@ -448,7 +448,7 @@ public class Mappa {
 						punti = VALORE_MONETA_PICCOLA;
 					}
 					Moneta moneta = new Moneta(punti, at.createTransformedShape(rettangolo),Color.yellow); 
-					monete.put(at.transform(new Point2D.Float(j,i), null), moneta);
+					monete.add(moneta);
 				}
 				numColonna++;
 			}
@@ -457,7 +457,7 @@ public class Mappa {
 		
 	}
 	
-	public HashMap<Point2D, Moneta> getMonete() {
+	public ArrayList<Moneta> getMonete() {
 		return monete;
 	}
 	

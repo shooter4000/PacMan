@@ -44,6 +44,11 @@ public class PacmanModel {
 	}
 	
 	public void stepNext() {
+		for(int i = 0 ; i < mappa.getMonete().size(); i++) {
+			if(mappa.getMonete().get(i).getForma().contains(pacman.getRettangoloCentrale().getBounds2D()))
+					mappa.getMonete().remove(i);
+		}
+		
 		for(Personaggio p: elencoPersonaggi) {
 			for(int i=1;i<=p.getVelocita();i++) {
 				if(p.getDirezioneProssima()!=null && !mappa.interseca(p.simulaProssimaPosizione(p.getDirezioneProssima()))) {
