@@ -23,7 +23,7 @@ public class Moneta {
 	private static final int ALTEZZA_MONETE_GRANDI = 24;
 	private static final Color COLORE_MONETA_GRANDE = Color.yellow;
 	
-	private static final int SIZE_CILIEGIA_GRAFICA = 60;
+	private static final int SIZE_CILIEGIA_GRAFICA = 30;
 	private static final int SIZE_CILIEGIA_COMPUTAZIONALE = 70;
 	private static final Color COLORE_CILIEGIA = Color.red;
 	private static final Color COLORE_GAMBO_CILIEGIA = new Color(180, 123, 66);
@@ -150,30 +150,31 @@ public class Moneta {
     			coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/8. + SIZE_CILIEGIA_GRAFICA/8.- SIZE_CILIEGIA_GRAFICA/8. ,
     			coordCentro.getX() - SIZE_CILIEGIA_GRAFICA*(1/4.-1/16.), coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/8. );
     	gamboSx.closePath();
-    	/*
+    	
     	Path2D gamboDx = new Path2D.Float();
-    	gamboDx.moveTo(coordCentro.getX() - SIZE_CILIEGIA_GRAFICA*(1/4.-1/16.), coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/8.);
-    	gamboDx.curveTo(coordCentro.getX() - SIZE_CILIEGIA_GRAFICA*(1/4.-1/16.),
-    			coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/8. - SIZE_CILIEGIA_GRAFICA/8.,
+    	gamboDx.moveTo(coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2.*11/30 , coordCentro.getY() + SIZE_CILIEGIA_GRAFICA/2.*13/30  - SIZE_CILIEGIA_GRAFICA/8.);
+    	gamboDx.curveTo(coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2.*11/30,
+    			coordCentro.getY() + SIZE_CILIEGIA_GRAFICA/2.*13/30 - SIZE_CILIEGIA_GRAFICA/8. - SIZE_CILIEGIA_GRAFICA/8.,
     			coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2. - SIZE_CILIEGIA_GRAFICA/4.,
     			coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/2. ,
     			coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2., coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/2.);
+    
     	gamboDx.lineTo(coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2, coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/2. + SIZE_CILIEGIA_GRAFICA/16.);
     	
     	gamboDx.curveTo(coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2 - SIZE_CILIEGIA_GRAFICA/4.,
     			coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/2. + SIZE_CILIEGIA_GRAFICA/16.,
-    			coordCentro.getX() - SIZE_CILIEGIA_GRAFICA*(1/4.-1/16.),
-    			coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/8. + SIZE_CILIEGIA_GRAFICA/8.- SIZE_CILIEGIA_GRAFICA/8. ,
-    			coordCentro.getX() - SIZE_CILIEGIA_GRAFICA*(1/4.-1/16.), coordCentro.getY() - SIZE_CILIEGIA_GRAFICA/8. );
+    			coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2.*11/30 + SIZE_CILIEGIA_GRAFICA/16.,
+    			coordCentro.getY() + SIZE_CILIEGIA_GRAFICA/2.*13/30  - SIZE_CILIEGIA_GRAFICA/8. ,
+    			coordCentro.getX() + SIZE_CILIEGIA_GRAFICA/2.*11/30 /*+ SIZE_CILIEGIA_GRAFICA/16.*/, coordCentro.getY() + SIZE_CILIEGIA_GRAFICA/2.*13/30  - SIZE_CILIEGIA_GRAFICA/8.);
     	gamboDx.closePath();
-    	*/
+    	
     	formaGrafica.add(new Forma(at.createTransformedShape(ciliegiaSx), COLORE_CILIEGIA));
     	formaGrafica.add(new Forma(at.createTransformedShape(eliminaParteCiliegiaSx), PnlAreaGioco.COLORE_SFONDO));
     	formaGrafica.add(new Forma(at.createTransformedShape(ciliegiaDx), COLORE_CILIEGIA));
     	formaGrafica.add(new Forma(at.createTransformedShape(riflessoCiliegiaSx), COLORE_RIFLESSO_CILIEGIA));
     	formaGrafica.add(new Forma(at.createTransformedShape(riflessoCiliegiaDx), COLORE_RIFLESSO_CILIEGIA));
     	formaGrafica.add(new Forma(at.createTransformedShape(gamboSx), COLORE_GAMBO_CILIEGIA));
-    	//formaGrafica.add(new Forma(at.createTransformedShape(gamboDx), COLORE_GAMBO_CILIEGIA));
+    	formaGrafica.add(new Forma(at.createTransformedShape(gamboDx), COLORE_GAMBO_CILIEGIA));
     	formaComputazionale = new Forma(at.createTransformedShape(new Rectangle2D.Float((float)(coordCentro.getX() - SIZE_CILIEGIA_COMPUTAZIONALE/2.),
     			(float)(coordCentro.getY() - SIZE_CILIEGIA_COMPUTAZIONALE/2.), SIZE_CILIEGIA_COMPUTAZIONALE, SIZE_CILIEGIA_COMPUTAZIONALE)),
     			COLORE_CILIEGIA);

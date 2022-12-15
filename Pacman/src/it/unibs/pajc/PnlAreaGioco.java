@@ -36,8 +36,7 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		double scaleFactor = Math.min(getWidth(), getHeight())/1000.;
-		
-				g2.scale(scaleFactor, -scaleFactor);
+		g2.scale(scaleFactor, -scaleFactor);
 		g2.translate(500.,-500.);
 		
 		g2.setStroke(new BasicStroke(5));
