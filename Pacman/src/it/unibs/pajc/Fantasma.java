@@ -35,6 +35,9 @@ public class Fantasma extends Personaggio{
 		addFormaGrafica(new Forma(costruisciPupilleFantasma(SIZE_FORMA_GRAFICA), COLORE_PUPILLA_OCCHI));
 		addFormaGrafica(new Forma(costruisciIridiFantasma(SIZE_FORMA_GRAFICA), COLORE_IRIDE_OCCHI));
 		
+		resettaFormaGraficaDebug();
+		addFormaGraficaDebug(getFormaComputazionale());
+		
 	}
 	
 	private Shape costruisciIridiFantasma(int dimensione) {

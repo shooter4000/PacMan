@@ -7,11 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class PnlAreaGioco extends JPanel implements KeyListener{
+	
+	public static final Color COLORE_SFONDO = Color.black;
 	
 	PacmanModel model = new PacmanModel();
 	
@@ -39,7 +42,7 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		
 		g2.setStroke(new BasicStroke(5));
 		
-		g2.setColor(Color.black);
+		g2.setColor(COLORE_SFONDO);
 		g2.fillRect(-500,-500, 1000,1000);
 				
 		for(Forma f: model.getMappa().getElencoOstacoliGrafici()) {
@@ -49,15 +52,25 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 		
 		g2.setColor(Color.white);
 		g2.fillRect(500, -1000, 2000, 2000);
-		for(Moneta o: model.getMappa().getMonete()) {
-			g2.setColor(o.getColore());
-			g2.fill(o.getForma());
+		
+		for(Moneta m: model.getMappa().getMonete()) {
+			/*
+			g2.setColor(m.getFormaComputazionale().getColore());
+			g2.fill(m.getFormaComputazionale().getForma());
+			*/
+			m.getFormaGrafica().forEach(x -> {
+				g2.setColor(x.getColore());
+				g2.fill(x.getForma());
+			});
+			
 		}
 		
 		for(Personaggio p: model.getElencoPersonaggi()) {
 			/*
-			g2.setColor(p.getFormaComputazionale().getColore());
-			g2.fill(p.getFormaComputazionale().getForma());
+			p.getFormaGraficaDebug().forEach(x -> {
+				g2.setColor(x.getColore());
+				g2.fill(x.getForma());
+			});
 			*/
 			
 			p.getFormaGrafica().forEach(x -> {
@@ -67,8 +80,11 @@ public class PnlAreaGioco extends JPanel implements KeyListener{
 			
 		}
 		
+		
 	}
 
+	
+	
 	@Override
 	public void keyTyped(KeyEvent e) {
 		

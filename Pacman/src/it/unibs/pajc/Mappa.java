@@ -40,12 +40,8 @@ public class Mappa {
 	private final Color COLORE_OSTACOLI = new Color(83, 88, 254);
 	private final Color COLORE_CANCELLO = new Color(240, 176, 233);
 	
-	private final int LARGHEZZA_MONETE_PICCOLE = 8;
-	private final int ALTEZZA_MONETE_PICCOLE = 8;
-	private final int LARGHEZZA_MONETE_GRANDI = 24;
-	private final int ALTEZZA_MONETE_GRANDI = 24;
-	private final double VALORE_MONETA_PICCOLA = 100;
-	private final double VALORE_MONETA_GRANDE = 10;
+	private final double VALORE_MONETA_PICCOLA = 10;
+	private final double VALORE_MONETA_GRANDE = 100;
 	
 	public Mappa(AffineTransform at) {
 		this.at = at;
@@ -422,32 +418,18 @@ public class Mappa {
 		}
 	}
 	
-	
 	private void creaMonete() {
-		float dimensionePerControllo = 18;
 		int numRiga = 1;
 		for(float i = 51; i <= 986-34; i+=((986-35)-(16+35))/28.) {
 			int numColonna = 1;
 			for (float j = 49; j < 1000-40; j+=((1000-14-35)-(14+35))/25.) {
-				RoundRectangle2D rettangolo = new RoundRectangle2D.Float(j-dimensionePerControllo/2, i-dimensionePerControllo/2, dimensionePerControllo, dimensionePerControllo, 18, 18);
-				boolean isContenuto = false;
-				for(Forma o : elencoOstacoliComputazionali) {
-					if (o.getForma().intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
-						isContenuto = true;
-						break;
-					}
-				}
-				
-				if(!isContenuto && (i<=434 || i>=504 || (j>200 && j<1000-200))) {
-					double punti;
+				if(!verificaIntersezioneMonete(new Point2D.Float(j, i)) && (i<=434 || i>=504 || (j>200 && j<1000-200))) {
+					Moneta moneta = null;
 					if((numRiga == 3 || numRiga==22) && (numColonna==1 || numColonna==26)) {
-						rettangolo.setRoundRect(j-LARGHEZZA_MONETE_GRANDI/2, i-ALTEZZA_MONETE_GRANDI/2, LARGHEZZA_MONETE_GRANDI, ALTEZZA_MONETE_GRANDI, 18, 18);
-						punti = VALORE_MONETA_GRANDE;
+							moneta = Moneta.elencoPossibiliMonete.get("CILIEGIA").apply(VALORE_MONETA_GRANDE, new Point2D.Float(j, i), at);
 					}else {
-						rettangolo.setRoundRect(j-LARGHEZZA_MONETE_PICCOLE/2, i-ALTEZZA_MONETE_PICCOLE/2, LARGHEZZA_MONETE_PICCOLE, ALTEZZA_MONETE_PICCOLE, 18, 18);
-						punti = VALORE_MONETA_PICCOLA;
+							moneta = Moneta.elencoPossibiliMonete.get("PICCOLA").apply(VALORE_MONETA_PICCOLA, new Point2D.Float(j, i), at);
 					}
-					Moneta moneta = new Moneta(punti, at.createTransformedShape(rettangolo),Color.yellow); 
 					monete.add(moneta);
 				}
 				numColonna++;
@@ -455,6 +437,17 @@ public class Mappa {
 			numRiga++;
 		}
 		
+	}
+	
+	private boolean verificaIntersezioneMonete(Point2D coordCentro) {
+		float dimensionePerControllo = 18;
+		Rectangle2D rettangolo = new Rectangle2D.Float((float)(coordCentro.getX()-dimensionePerControllo/2.), (float)(coordCentro.getY()-dimensionePerControllo/2.), dimensionePerControllo, dimensionePerControllo);
+		for(Forma o : elencoOstacoliComputazionali) {
+			if (o.getForma().intersects(at.createTransformedShape(rettangolo).getBounds2D())) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public ArrayList<Moneta> getMonete() {

@@ -16,8 +16,8 @@ public class Pacman extends Personaggio{
 	private static double DELTA_ANGOLO = 0.75;
 	private boolean isClosing = true;
 	private Color colorePacman;
-	private Shape rettangoloCentrale;
-	
+	private Forma rettangoloCentrale;
+	private static final Color COLORE_FIGURA_MANGIA_MONETE = Color.red;
 	
 	public Pacman(Color colore) {
 		super(new Point2D.Float(-495+35+9, 250), Direzioni.SINISTRA);
@@ -40,9 +40,14 @@ public class Pacman extends Personaggio{
 	private void costruisciPacman() {
 		setFormaComputazionale(new Forma(new Rectangle2D.Float((float)(getPosCentro().getX()-SIZE_FORMA_COMPUTAZIONALE/2.),
 				(float)(getPosCentro().getY()- SIZE_FORMA_COMPUTAZIONALE/2.), (float)SIZE_FORMA_COMPUTAZIONALE, (float)SIZE_FORMA_COMPUTAZIONALE), colorePacman));
-		setRettangoloCentrale(new Rectangle2D.Float((float)getPosCentro().getX(),(float)getPosCentro().getY(),1,1));
+		setRettangoloCentrale(new Forma(new Rectangle2D.Float((float)getPosCentro().getX(),(float)getPosCentro().getY(),1,1), COLORE_FIGURA_MANGIA_MONETE));
+		
 		resettaFormaGrafica();
 		addFormaGrafica(new Forma(costruisciPacman(SIZE_FORMA_GRAFICA, getPosCentro()), colorePacman));
+		
+		resettaFormaGraficaDebug();
+		addFormaGraficaDebug(getFormaComputazionale());
+		addFormaGraficaDebug(rettangoloCentrale);
 	}
 	
 	private Arc2D costruisciPacman(int diametro, Point2D posCentro) {
@@ -82,10 +87,10 @@ public class Pacman extends Personaggio{
 	}
 	
 
-	private void setRettangoloCentrale(Shape forma) {
+	private void setRettangoloCentrale(Forma forma) {
 		rettangoloCentrale = forma;
 	}
-	public Shape getRettangoloCentrale() {
+	public Forma getRettangoloCentrale() {
 		return rettangoloCentrale;
 	}
 

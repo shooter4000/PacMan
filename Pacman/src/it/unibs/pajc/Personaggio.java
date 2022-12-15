@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public abstract class Personaggio {
 	private Forma formaComputazionale;
 	private ArrayList<Forma> formaGrafica = new ArrayList<>();
+	private ArrayList<Forma> formaGraficaDebug = new ArrayList<>();
 	private Point2D posCentro;
 	private Direzioni direzione;
 	private Direzioni direzioneProssima;
@@ -39,6 +40,18 @@ public abstract class Personaggio {
 	
 	public void addFormaGrafica(Forma forma) {
 		this.formaGrafica.add(forma);
+	}
+	
+	public ArrayList<Forma> getFormaGraficaDebug() {
+		return formaGraficaDebug;
+	}
+	
+	protected void resettaFormaGraficaDebug() {
+		formaGraficaDebug.clear();
+	}
+	
+	public void addFormaGraficaDebug(Forma forma) {
+		this.formaGraficaDebug.add(forma);
 	}
 	
 	public Point2D getPosCentro() {

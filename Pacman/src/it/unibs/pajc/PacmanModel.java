@@ -45,20 +45,26 @@ public class PacmanModel {
 	
 	public void stepNext() {
 		for(int i = 0 ; i < mappa.getMonete().size(); i++) {
-			if(mappa.getMonete().get(i).getForma().contains(pacman.getRettangoloCentrale().getBounds2D()))
-					mappa.getMonete().remove(i);
+			if(mappa.getMonete().get(i).getFormaComputazionale().getForma().intersects(pacman.getRettangoloCentrale().getForma().getBounds2D())) {
+				mappa.getMonete().remove(i);
+				break;
+			}
+					
 		}
 		
-		for(Personaggio p: elencoPersonaggi) {
-			for(int i=1;i<=p.getVelocita();i++) {
-				if(p.getDirezioneProssima()!=null && !mappa.interseca(p.simulaProssimaPosizione(p.getDirezioneProssima()))) {
-					p.setDirezione(p.getDirezioneProssima());
+		elencoPersonaggi
+			.stream()
+			.parallel()
+			.forEach(p -> {
+				for(int i=1;i<=p.getVelocita();i++) {
+					if(p.getDirezioneProssima()!=null && !mappa.interseca(p.simulaProssimaPosizione(p.getDirezioneProssima()))) {
+						p.setDirezione(p.getDirezioneProssima());
+					}
+					
+					if(!mappa.interseca(p.simulaProssimaPosizione(p.getDirezione())))
+						p.stepNext();
 				}
-				
-				if(!mappa.interseca(p.simulaProssimaPosizione(p.getDirezione())))
-					p.stepNext();
-			}
-		}
+			});
 	}
 	
 
